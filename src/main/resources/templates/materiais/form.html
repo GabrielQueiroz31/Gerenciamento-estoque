@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Material | Sistema de Estoque</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<main class="senai-main">
+    <section class="senai-hero">
+        <div class="senai-shell" style="justify-content:center;">
+            <div class="senai-card" style="width: 100%; max-width: 520px;">
+
+                <h1 class="senai-title" style="font-size: 22px;"
+                    th:text="${material != null} ? 'Editar Material' : 'Novo Material'"></h1>
+
+                <div th:if="${erro}" class="senai-alert senai-alert-error">
+                    <p th:text="${erro}"></p>
+                </div>
+
+                <!-- Formulário de criação -->
+                <form th:if="${material == null}"
+                      th:action="@{/materiais/salvar}" method="post" class="senai-form">
+
+                    <label class="senai-label">Nome</label>
+                    <input class="senai-input" type="text" name="nome" required maxlength="150"/>
+
+                    <label class="senai-label">Descrição</label>
+                    <input class="senai-input" type="text" name="descricao" maxlength="255"/>
+
+                    <label class="senai-label">Quantidade</label>
+                    <input class="senai-input" type="number" name="quantidade" value="0" min="0" required/>
+
+                    <label class="senai-label">Categoria</label>
+                    <select class="senai-input" name="categoriaId" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option th:each="cat : ${categorias}"
+                                th:value="${cat.id}"
+                                th:text="${cat.nome}"></option>
+                    </select>
+
+                    <button class="senai-button" type="submit" style="width:100%; margin-top:12px;">
+                        Salvar
+                    </button>
+                </form>
+
+                <!-- Formulário de edição -->
+                <form th:if="${material != null}"
+                      th:action="@{/materiais/atualizar/{id}(id=${material.id})}" method="post" class="senai-form">
+
+                    <label class="senai-label">Nome</label>
+                    <input class="senai-input" type="text" name="nome"
+                           th:value="${material.nome}" required maxlength="150"/>
+
+                    <label class="senai-label">Descrição</label>
+                    <input class="senai-input" type="text" name="descricao"
+                           th:value="${material.descricao}" maxlength="255"/>
+
+                    <label class="senai-label">Quantidade</label>
+                    <input class="senai-input" type="number" name="quantidade"
+                           th:value="${material.quantidade}" min="0" required/>
+
+                    <label class="senai-label">Categoria</label>
+                    <select class="senai-input" name="categoriaId" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option th:each="cat : ${categorias}"
+                                th:value="${cat.id}"
+                                th:selected="${material.categoria != null && material.categoria.id == cat.id}"
+                                th:text="${cat.nome}"></option>
+                    </select>
+
+                    <button class="senai-button" type="submit" style="width:100%; margin-top:12px;">
+                        Atualizar
+                    </button>
+                </form>
+
+                <a class="senai-link" th:href="@{/materiais}" style="display:block; margin-top:12px;">
+                    ← Voltar para Materiais
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

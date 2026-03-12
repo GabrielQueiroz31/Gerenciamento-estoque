@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ativo | Sistema de Estoque</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<main class="senai-main">
+    <section class="senai-hero">
+        <div class="senai-shell" style="justify-content:center;">
+            <div class="senai-card" style="width: 100%; max-width: 520px;">
+
+                <h1 class="senai-title" style="font-size: 22px;"
+                    th:text="${ativo != null} ? 'Editar Ativo' : 'Novo Ativo'"></h1>
+
+                <div th:if="${erro}" class="senai-alert senai-alert-error">
+                    <p th:text="${erro}"></p>
+                </div>
+
+                <!-- Formulário criação -->
+                <form th:if="${ativo == null}"
+                      th:action="@{/ativos/salvar}" method="post" class="senai-form">
+
+                    <label class="senai-label">Nome</label>
+                    <input class="senai-input" type="text" name="nome" required maxlength="150"/>
+
+                    <label class="senai-label">Descrição</label>
+                    <input class="senai-input" type="text" name="descricao" maxlength="255"/>
+
+                    <label class="senai-label">Nº Patrimônio</label>
+                    <input class="senai-input" type="text" name="numeroPatrimonio" required maxlength="50"/>
+
+                    <label class="senai-label">Localização</label>
+                    <input class="senai-input" type="text" name="localizacao" required/>
+
+                    <label class="senai-label">Estado</label>
+                    <select class="senai-input" name="estado" required>
+                        <option value="">Selecione o estado</option>
+                        <option value="BOM">Bom</option>
+                        <option value="REGULAR">Regular</option>
+                        <option value="RUIM">Ruim</option>
+                        <option value="INATIVO">Inativo</option>
+                    </select>
+
+                    <button class="senai-button" type="submit" style="width:100%; margin-top:12px;">
+                        Salvar
+                    </button>
+                </form>
+
+                <!-- Formulário edição -->
+                <form th:if="${ativo != null}"
+                      th:action="@{/ativos/atualizar/{id}(id=${ativo.id})}" method="post" class="senai-form">
+
+                    <label class="senai-label">Nome</label>
+                    <input class="senai-input" type="text" name="nome"
+                           th:value="${ativo.nome}" required maxlength="150"/>
+
+                    <label class="senai-label">Descrição</label>
+                    <input class="senai-input" type="text" name="descricao"
+                           th:value="${ativo.descricao}" maxlength="255"/>
+
+                    <label class="senai-label">Nº Patrimônio</label>
+                    <input class="senai-input" type="text" name="numeroPatrimonio"
+                           th:value="${ativo.numeroPatrimonio}" required maxlength="50"/>
+
+                    <label class="senai-label">Localização</label>
+                    <input class="senai-input" type="text" name="localizacao"
+                           th:value="${ativo.localizacao}" required/>
+
+                    <label class="senai-label">Estado</label>
+                    <select class="senai-input" name="estado" required>
+                        <option value="BOM"      th:selected="${ativo.estado == 'BOM'}">Bom</option>
+                        <option value="REGULAR"  th:selected="${ativo.estado == 'REGULAR'}">Regular</option>
+                        <option value="RUIM"     th:selected="${ativo.estado == 'RUIM'}">Ruim</option>
+                        <option value="INATIVO"  th:selected="${ativo.estado == 'INATIVO'}">Inativo</option>
+                    </select>
+
+                    <button class="senai-button" type="submit" style="width:100%; margin-top:12px;">
+                        Atualizar
+                    </button>
+                </form>
+
+                <a class="senai-link" th:href="@{/ativos}" style="display:block; margin-top:12px;">
+                    ← Voltar para Ativos
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

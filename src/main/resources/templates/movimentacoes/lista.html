@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Movimentações | Sistema de Estoque</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<main class="senai-main">
+    <section class="senai-hero">
+        <div class="senai-shell" style="flex-direction: column; align-items: flex-start; gap: 16px;">
+
+            <div style="display:flex; justify-content:space-between; width:100%;">
+                <h1 class="senai-title" style="font-size: 22px;">Movimentações de Estoque</h1>
+                <a class="senai-button" th:href="@{/movimentacoes/nova}">+ Nova Movimentação</a>
+            </div>
+
+            <table style="width:100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: #E30613; color: white;">
+                        <th style="padding: 12px; text-align: left;">Material</th>
+                        <th style="padding: 12px; text-align: center;">Tipo</th>
+                        <th style="padding: 12px; text-align: center;">Quantidade</th>
+                        <th style="padding: 12px; text-align: left;">Observação</th>
+                        <th style="padding: 12px; text-align: center;">Data/Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="mov : ${movimentacoes}" style="border-bottom: 1px solid #E5E7EB;">
+                        <td style="padding: 12px;" th:text="${mov.material.nome}"></td>
+                        <td style="padding: 12px; text-align: center;">
+                            <span th:text="${mov.tipo}"
+                                  th:style="${mov.tipo == 'ENTRADA'} ? 'color: #166534; font-weight: bold;' : 'color: #991B1B; font-weight: bold;'">
+                            </span>
+                        </td>
+                        <td style="padding: 12px; text-align: center;" th:text="${mov.quantidade}"></td>
+                        <td style="padding: 12px;" th:text="${mov.observacao}"></td>
+                        <td style="padding: 12px; text-align: center;"
+                            th:text="${#temporals.format(mov.dataHora, 'dd/MM/yyyy HH:mm')}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(movimentacoes)}">
+                        <td colspan="5" style="padding: 12px; text-align: center; color: #6B7280;">
+                            Nenhuma movimentação registrada.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a class="senai-link" th:href="@{/app}">← Voltar para área interna</a>
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

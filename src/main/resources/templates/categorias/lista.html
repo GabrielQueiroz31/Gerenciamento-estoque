@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Categorias | Sistema de Estoque</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<main class="senai-main">
+    <section class="senai-hero">
+        <div class="senai-shell" style="flex-direction: column; align-items: flex-start; gap: 16px;">
+
+            <div style="display:flex; justify-content:space-between; width:100%;">
+                <h1 class="senai-title" style="font-size: 22px;">Categorias</h1>
+                <a class="senai-button" th:href="@{/categorias/nova}">+ Nova Categoria</a>
+            </div>
+
+            <table style="width:100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: #E30613; color: white;">
+                        <th style="padding: 12px; text-align: left;">Nome</th>
+                        <th style="padding: 12px; text-align: left;">Descrição</th>
+                        <th style="padding: 12px; text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cat : ${categorias}" style="border-bottom: 1px solid #E5E7EB;">
+                        <td style="padding: 12px;" th:text="${cat.nome}"></td>
+                        <td style="padding: 12px;" th:text="${cat.descricao}"></td>
+                        <td style="padding: 12px; text-align: center;">
+                            <a class="senai-link" th:href="@{/categorias/editar/{id}(id=${cat.id})}">Editar</a>
+                            &nbsp;|&nbsp;
+                            <a class="senai-link" style="color: #E30613;"
+                               th:href="@{/categorias/deletar/{id}(id=${cat.id})}"
+                               onclick="return confirm('Tem certeza que deseja deletar?')">Deletar</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(categorias)}">
+                        <td colspan="3" style="padding: 12px; text-align: center; color: #6B7280;">
+                            Nenhuma categoria cadastrada.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a class="senai-link" th:href="@{/app}">← Voltar para área interna</a>
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

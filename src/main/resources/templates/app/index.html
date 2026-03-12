@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Área Interna | Sistema de Estoque e Patrimônio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<main class="senai-main">
+    <section class="senai-hero">
+        <div class="senai-shell" style="flex-direction: column; align-items: flex-start; gap: 20px;">
+
+            <!-- Cabeçalho -->
+            <div style="display:flex; justify-content:space-between; width:100%;">
+                <div>
+                    <h1 class="senai-title" style="font-size: 22px;">Área Interna</h1>
+                    <p class="senai-subtitle" style="margin-top: 6px;">
+                        Logado como: <strong th:text="${nif}"></strong>
+                    </p>
+                </div>
+                <a class="senai-button" th:href="@{/logout}">Logout</a>
+            </div>
+
+            <hr style="width:100%; border: 0; border-top: 1px solid #E5E7EB;"/>
+
+            <!-- Cards de navegação -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; width: 100%;">
+
+                <!-- Categorias -->
+                <div class="senai-card" style="display:flex; flex-direction:column; gap: 10px;">
+                    <h2 style="margin:0; font-size: 18px;">📁 Categorias</h2>
+                    <p style="margin:0; color:#6B7280; font-size: 14px;">
+                        Gerencie as categorias dos materiais.
+                    </p>
+                    <a class="senai-button" th:href="@{/categorias}" style="text-align:center;">Acessar</a>
+                </div>
+
+                <!-- Materiais -->
+                <div class="senai-card" style="display:flex; flex-direction:column; gap: 10px;">
+                    <h2 style="margin:0; font-size: 18px;">📦 Materiais</h2>
+                    <p style="margin:0; color:#6B7280; font-size: 14px;">
+                        Controle o estoque de materiais.
+                    </p>
+                    <a class="senai-button" th:href="@{/materiais}" style="text-align:center;">Acessar</a>
+                </div>
+
+                <!-- Movimentações -->
+                <div class="senai-card" style="display:flex; flex-direction:column; gap: 10px;">
+                    <h2 style="margin:0; font-size: 18px;">🔄 Movimentações</h2>
+                    <p style="margin:0; color:#6B7280; font-size: 14px;">
+                        Registre entradas e saídas de estoque.
+                    </p>
+                    <a class="senai-button" th:href="@{/movimentacoes}" style="text-align:center;">Acessar</a>
+                </div>
+
+                <!-- Ativos -->
+                <div class="senai-card" style="display:flex; flex-direction:column; gap: 10px;">
+                    <h2 style="margin:0; font-size: 18px;">🏷️ Ativos Patrimoniais</h2>
+                    <p style="margin:0; color:#6B7280; font-size: 14px;">
+                        Gerencie os ativos da instituição.
+                    </p>
+                    <a class="senai-button" th:href="@{/ativos}" style="text-align:center;">Acessar</a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ativos | Sistema de Estoque</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<main class="senai-main">
+    <section class="senai-hero">
+        <div class="senai-shell" style="flex-direction: column; align-items: flex-start; gap: 16px;">
+
+            <div style="display:flex; justify-content:space-between; width:100%;">
+                <h1 class="senai-title" style="font-size: 22px;">Ativos Patrimoniais</h1>
+                <a class="senai-button" th:href="@{/ativos/novo}">+ Novo Ativo</a>
+            </div>
+
+            <table style="width:100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: #E30613; color: white;">
+                        <th style="padding: 12px; text-align: left;">Nº Patrimônio</th>
+                        <th style="padding: 12px; text-align: left;">Nome</th>
+                        <th style="padding: 12px; text-align: left;">Localização</th>
+                        <th style="padding: 12px; text-align: center;">Estado</th>
+                        <th style="padding: 12px; text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="ativo : ${ativos}" style="border-bottom: 1px solid #E5E7EB;">
+                        <td style="padding: 12px;" th:text="${ativo.numeroPatrimonio}"></td>
+                        <td style="padding: 12px;" th:text="${ativo.nome}"></td>
+                        <td style="padding: 12px;" th:text="${ativo.localizacao}"></td>
+                        <td style="padding: 12px; text-align: center;">
+                            <span th:text="${ativo.estado}"
+                                  th:classappend="${ativo.estado == 'BOM'} ? 'badge-bom' :
+                                                 (${ativo.estado == 'REGULAR'} ? 'badge-regular' :
+                                                 (${ativo.estado == 'RUIM'} ? 'badge-ruim' : 'badge-inativo'))"
+                                  class="badge"></span>
+                        </td>
+                        <td style="padding: 12px; text-align: center;">
+                            <a class="senai-link" th:href="@{/ativos/editar/{id}(id=${ativo.id})}">Editar</a>
+                            &nbsp;|&nbsp;
+                            <a class="senai-link" style="color: #E30613;"
+                               th:href="@{/ativos/deletar/{id}(id=${ativo.id})}"
+                               onclick="return confirm('Tem certeza que deseja deletar?')">Deletar</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(ativos)}">
+                        <td colspan="5" style="padding: 12px; text-align: center; color: #6B7280;">
+                            Nenhum ativo cadastrado.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a class="senai-link" th:href="@{/app}">← Voltar para área interna</a>
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

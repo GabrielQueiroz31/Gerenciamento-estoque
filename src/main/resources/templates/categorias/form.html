@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Categoria | Sistema de Estoque</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<main class="senai-main">
+    <section class="senai-hero">
+        <div class="senai-shell" style="justify-content:center;">
+            <div class="senai-card" style="width: 100%; max-width: 520px;">
+
+                <h1 class="senai-title" style="font-size: 22px;"
+                    th:text="${categoria.id != null} ? 'Editar Categoria' : 'Nova Categoria'"></h1>
+
+                <div th:if="${erro}" class="senai-alert senai-alert-error">
+                    <p th:text="${erro}"></p>
+                </div>
+
+                <!-- Formulário de criação -->
+                <form th:if="${categoria.id == null}"
+                      th:action="@{/categorias/salvar}" method="post" class="senai-form">
+                    <label class="senai-label">Nome</label>
+                    <input class="senai-input" type="text" name="nome" required maxlength="100"/>
+
+                    <label class="senai-label">Descrição</label>
+                    <input class="senai-input" type="text" name="descricao" maxlength="255"/>
+
+                    <button class="senai-button" type="submit" style="width:100%; margin-top:12px;">
+                        Salvar
+                    </button>
+                </form>
+
+                <!-- Formulário de edição -->
+                <form th:if="${categoria.id != null}"
+                      th:action="@{/categorias/atualizar/{id}(id=${categoria.id})}" method="post" class="senai-form">
+                    <label class="senai-label">Nome</label>
+                    <input class="senai-input" type="text" name="nome"
+                           th:value="${categoria.nome}" required maxlength="100"/>
+
+                    <label class="senai-label">Descrição</label>
+                    <input class="senai-input" type="text" name="descricao"
+                           th:value="${categoria.descricao}" maxlength="255"/>
+
+                    <button class="senai-button" type="submit" style="width:100%; margin-top:12px;">
+                        Atualizar
+                    </button>
+                </form>
+
+                <a class="senai-link" th:href="@{/categorias}" style="display:block; margin-top:12px;">
+                    ← Voltar para Categorias
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>
